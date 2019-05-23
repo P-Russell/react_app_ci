@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t test_client -f client/Dockerfile.dev ./client
+
+script:
+  - docker run test_client npm run test
+
+after_success:
+  - docker build -t prussell011/complext_client -f client/Dockerfile ./client
+  - docker build -t prussell011/complex_worker -f worker/Dockerfile ./worker
+  - docker build -t prussell011/complex_server -f server/Dockerfile ./server
+  - docker build -t prussell011/complex_nginx -f nginx/Dockerfile ./nginx

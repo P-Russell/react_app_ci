@@ -9,7 +9,12 @@ script:
   - docker run test_client npm run test
 
 after_success:
-  - docker build -t prussell011/complext_client -f client/Dockerfile ./client
-  - docker build -t prussell011/complex_worker -f worker/Dockerfile ./worker
-  - docker build -t prussell011/complex_server -f server/Dockerfile ./server
-  - docker build -t prussell011/complex_nginx -f nginx/Dockerfile ./nginx
+  - docker build -t pdrussell011/multi_client -f client/Dockerfile ./client
+  - docker build -t pdrussell011/multi_worker -f worker/Dockerfile ./worker
+  - docker build -t pdrussell011/multi_server -f server/Dockerfile ./server
+  - docker build -t pdrussell011/multi_nginx -f nginx/Dockerfile ./nginx
+  - echo "DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --password-stdin
+  - docker push pdrussell011/multi_client
+  - docker push pdrussell011/multi_worker
+  - docker push pdrussell011/multi_server
+  - docker push pdrussell011/multi_nginx
